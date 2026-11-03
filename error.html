@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estado {{ codigo }} — TransAgro ML</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link rel="stylesheet" href="../static/estilos.css">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+:root {
+    --primary: #059669;
+    --primary-hover: #047857;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-400: #94a3b8;
+    --slate-200: #e2e8f0;
+    --white: #ffffff;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: var(--font-sans);
+    background-color: #f6f9f8;
+    color: var(--slate-800);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.cabecera {
+    background: rgba(15, 23, 42, 0.95);
+    padding: 14px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.cabecera-contenido {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-badge {
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: var(--white);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.logo-texto {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--white);
+}
+.nav-enlace {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+}
+.contenedor {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+}
+.tarjeta {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 50px 30px;
+    text-align: center;
+    border: 1px solid var(--slate-200);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
+}
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #059669, #047857);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    margin-top: 20px;
+}
+.pie {
+    background: var(--white);
+    border-top: 1px solid var(--slate-200);
+    padding: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--slate-400);
+}
+    </style>
+</head>
+<body>
+<header class="cabecera">
+    <div class="cabecera-contenido">
+        <a href="/" class="logo-link">
+            <div class="logo-badge">🚜</div>
+            <div class="logo-texto">TransAgro</div>
+        </a>
+        <nav>
+            <a href="/" class="nav-enlace">Calculadora</a>
+            <a href="/acerca" class="nav-enlace">Acerca del Modelo</a>
+        </nav>
+    </div>
+</header>
+
+<main class="contenedor">
+    <section class="tarjeta">
+        <div style="font-size: 3.5rem; margin-bottom: 10px;">⚠️</div>
+        <h1 style="font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1;">{{ codigo }}</h1>
+        <p style="font-size: 1.25rem; font-weight: 600; color: var(--slate-700); margin: 16px 0 8px;">{{ mensaje }}</p>
+        <p style="color: var(--slate-400); font-size: 0.92rem; margin-bottom: 24px;">La solicitud no pudo procesarse o la ruta no existe.</p>
+        <a href="/" class="btn-submit">
+            <span>Regresar a la Calculadora</span>
+        </a>
+    </section>
+</main>
+
+<footer class="pie">
+    <p>SENATI — Caso Práctico 02 | Machine Learning y Deep Learning</p>
+</footer>
+</body>
+</html>

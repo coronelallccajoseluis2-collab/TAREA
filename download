@@ -1,0 +1,8 @@
+__pycache__
+*.pyc
+capturas
+02_Caso_para_desarrollar.ipynb
+datos.csv
+entrenar_modelo.py
+pruebas.py
+wsgi.py

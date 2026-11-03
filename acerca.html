@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Acerca del Modelo — TransAgro ML</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <link rel="stylesheet" href="../static/estilos.css">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
+
+:root {
+    --primary: #059669;
+    --primary-hover: #047857;
+    --primary-dark: #064e3b;
+    --primary-light: #ecfdf5;
+    --primary-border: #a7f3d0;
+    --primary-glow: rgba(5, 150, 105, 0.2);
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --slate-400: #94a3b8;
+    --slate-300: #cbd5e1;
+    --slate-200: #e2e8f0;
+    --slate-100: #f1f5f9;
+    --slate-50:  #f8fafc;
+    --white:     #ffffff;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --warning-text: #92400e;
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 2px 4px 0 rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 6px 12px -2px rgba(15, 23, 42, 0.08), 0 3px 6px -3px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 12px 24px -4px rgba(15, 23, 42, 0.09), 0 6px 12px -6px rgba(15, 23, 42, 0.05);
+    --shadow-xl: 0 24px 38px -6px rgba(15, 23, 42, 0.12), 0 10px 16px -8px rgba(15, 23, 42, 0.06);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+    font-family: var(--font-sans);
+    background-color: #f6f9f8;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(5, 150, 105, 0.06) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(15, 23, 42, 0.04) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(5, 150, 105, 0.04) 0px, transparent 50%);
+    background-attachment: fixed;
+    color: var(--slate-800);
+    min-height: 100vh;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecera {
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.cabecera-contenido {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-badge {
+    background: linear-gradient(135deg, #10b981, #047857);
+    color: var(--white);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.logo-texto {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.logo-sub {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(255, 255, 255, 0.12);
+    color: #6ee7b7;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(110, 231, 183, 0.25);
+}
+
+nav { display: flex; align-items: center; gap: 8px; }
+
+.nav-enlace {
+    color: var(--slate-300);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-enlace:hover { color: var(--white); background: rgba(255, 255, 255, 0.08); }
+.nav-enlace.activo { color: var(--white); background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.35); }
+
+.contenedor {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 36px 20px 60px;
+    flex: 1;
+}
+
+.tarjeta-hero {
+    background: linear-gradient(135deg, var(--slate-900) 0%, #1e3a2f 100%);
+    border-radius: var(--radius-xl);
+    padding: 36px 36px;
+    margin-bottom: 28px;
+    color: var(--white);
+    box-shadow: var(--shadow-xl);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #6ee7b7;
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.hero-pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+}
+
+.tarjeta-hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+    color: var(--white);
+}
+
+.tarjeta-hero .sub {
+    font-size: 1.02rem;
+    color: var(--slate-300);
+    max-width: 620px;
+    line-height: 1.55;
+}
+
+.tarjeta {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    margin-bottom: 24px;
+    border: 1px solid var(--slate-200);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.tarjeta:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--slate-300);
+}
+
+.seccion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--slate-100);
+}
+
+.seccion-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--slate-900);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+}
+
+.seccion-icono {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.bloque-ecuacion {
+    background: var(--slate-900);
+    color: #e2e8f0;
+    padding: 22px 24px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    border: 1px solid var(--slate-700);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.ecuacion-label {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.ecuacion-formula {
+    color: #6ee7b7;
+    font-weight: 600;
+}
+
+.ecuacion-termino {
+    color: #93c5fd;
+}
+
+.tabla-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-200);
+}
+
+.tabla-modelo {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.92rem;
+}
+
+.tabla-modelo th {
+    background: var(--slate-50);
+    color: var(--slate-700);
+    font-weight: 700;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--slate-200);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.tabla-modelo td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--slate-100);
+    color: var(--slate-700);
+}
+
+.tabla-modelo tr:last-child td { border-bottom: none; }
+.tabla-modelo tr:hover td { background: var(--slate-50); }
+
+.tabla-codigo {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.metricas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.metrica-card {
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-md);
+    padding: 18px 14px;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.metrica-card:hover {
+    background: var(--white);
+    border-color: var(--primary-border);
+    transform: translateY(-2px);
+}
+
+.metrica-valor {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-hover);
+    line-height: 1.2;
+}
+
+.metrica-nombre {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--slate-700);
+    margin-top: 6px;
+}
+
+.metrica-desc {
+    font-size: 0.72rem;
+    color: var(--slate-400);
+    margin-top: 2px;
+}
+
+.lista-limitaciones {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lista-limitaciones li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.92rem;
+    color: var(--slate-700);
+}
+
+.check-icono {
+    color: var(--primary);
+    font-weight: 800;
+    line-height: 1.4;
+}
+
+.tech-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tech-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--slate-100);
+    border: 1px solid var(--slate-200);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--slate-700);
+    transition: all 0.2s ease;
+}
+
+.tech-tag:hover {
+    background: var(--white);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.pie {
+    background: var(--white);
+    border-top: 1px solid var(--slate-200);
+    padding: 26px 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--slate-500);
+    margin-top: auto;
+}
+
+.pie-enlaces {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 8px;
+}
+
+.pie-enlaces a { color: var(--slate-500); text-decoration: none; font-weight: 600; }
+.pie-enlaces a:hover { color: var(--primary); }
+
+@media (max-width: 768px) {
+    .contenedor { padding: 20px 14px 40px; }
+    .tarjeta-hero { padding: 26px 22px; }
+    .tarjeta-hero h1 { font-size: 1.6rem; }
+    .metricas-grid { grid-template-columns: repeat(2, 1fr); }
+    .cabecera-contenido { flex-direction: column; padding: 12px 16px; }
+}
+    </style>
+</head>
+<body>
+<header class="cabecera">
+    <div class="cabecera-contenido">
+        <a href="/" class="logo-link">
+            <div class="logo-badge">🚜</div>
+            <div class="logo-texto">
+                TransAgro
+                <span class="logo-sub">ML System</span>
+            </div>
+        </a>
+        <nav>
+            <a href="/" class="nav-enlace">Calculadora</a>
+            <a href="/acerca" class="nav-enlace activo">Acerca del Modelo</a>
+        </nav>
+    </div>
+</header>
+
+<main class="contenedor">
+    <section class="tarjeta-hero">
+        <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            Arquitectura de Inferencia
+        </div>
+        <h1>Fundamentos del Modelo Predictivo</h1>
+        <p class="sub">Documentación matemática, coeficientes ponderados y validación estadística del estimador de transporte agrícola.</p>
+    </section>
+
+    <section class="tarjeta">
+        <div class="seccion-header">
+            <h2 class="seccion-titulo">
+                <span class="seccion-icono">📐</span>
+                Ecuación de Regresión Lineal Múltiple
+            </h2>
+        </div>
+        <div class="bloque-ecuacion">
+            <span class="ecuacion-label">// Modelo de inferencia en producción</span>
+            <div class="ecuacion-formula">
+                Costo(S/) = <span class="ecuacion-termino">{{ '%.4f'|format(modelo.intercepto) }}</span>
+                + (<span class="ecuacion-termino">{{ '%.4f'|format(modelo.coeficientes.distancia_km) }}</span> × Distancia_km)
+                + (<span class="ecuacion-termino">{{ '%.4f'|format(modelo.coeficientes.carga_kg) }}</span> × Carga_kg)
+                + (<span class="ecuacion-termino">{{ '%.4f'|format(modelo.coeficientes.via_no_asfaltada) }}</span> × Vía_no_asfaltada)
+            </div>
+        </div>
+    </section>
+
+    <section class="tarjeta">
+        <div class="seccion-header">
+            <h2 class="seccion-titulo">
+                <span class="seccion-icono">📈</span>
+                Interpretación de Coeficientes y Pesos
+            </h2>
+        </div>
+        <div class="tabla-wrapper">
+            <table class="tabla-modelo">
+                <thead>
+                    <tr>
+                        <th>Parámetro</th>
+                        <th>Peso (Beta)</th>
+                        <th>Significancia e Impacto en Negocio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Intercepto ($b_0$)</strong></td>
+                        <td><span class="tabla-codigo">{{ '%.4f'|format(modelo.intercepto) }}</span></td>
+                        <td>Costo base operativo fijo (apertura de servicio y maniobras).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Distancia ($km$)</strong></td>
+                        <td><span class="tabla-codigo">+{{ '%.4f'|format(modelo.coeficientes.distancia_km) }}</span></td>
+                        <td>Cada kilómetro recorrido incrementa la tarifa en aproximadamente S/ 2.77.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Carga ($kg$)</strong></td>
+                        <td><span class="tabla-codigo">+{{ '%.4f'|format(modelo.coeficientes.carga_kg) }}</span></td>
+                        <td>Cada 100 kg adicionales transportados agregan S/ 10.73 al costo total.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trocha / No Asfaltada</strong></td>
+                        <td><span class="tabla-codigo">+{{ '%.4f'|format(modelo.coeficientes.via_no_asfaltada) }}</span></td>
+                        <td>Sobrecosto fijo de S/ 26.44 por desgaste de neumáticos, amortiguación y mayor consumo.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="tarjeta">
+        <div class="seccion-header">
+            <h2 class="seccion-titulo">
+                <span class="seccion-icono">🎯</span>
+                Métricas de Rendimiento y Error
+            </h2>
+        </div>
+        <div class="metricas-grid">
+            <div class="metrica-card">
+                <div class="metrica-valor">{{ '%.3f'|format(modelo.metricas.r2) }}</div>
+                <div class="metrica-nombre">Bondad de Ajuste (R²)</div>
+                <div class="metrica-desc">Explica el 97.7% de varianza</div>
+            </div>
+            <div class="metrica-card">
+                <div class="metrica-valor">S/ {{ '%.2f'|format(modelo.metricas.mae) }}</div>
+                <div class="metrica-nombre">Error Absoluto Medio (MAE)</div>
+                <div class="metrica-desc">Margen promedio en test</div>
+            </div>
+            <div class="metrica-card">
+                <div class="metrica-valor">80% / 20%</div>
+                <div class="metrica-nombre">Train / Test Split</div>
+                <div class="metrica-desc">Validación cruzada aleatoria</div>
+            </div>
+            <div class="metrica-card">
+                <div class="metrica-valor">130</div>
+                <div class="metrica-nombre">Total de Registros</div>
+                <div class="metrica-desc">Dataset histórico calibrado</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tarjeta">
+        <div class="seccion-header">
+            <h2 class="seccion-titulo">
+                <span class="seccion-icono">⚠️</span>
+                Alcance y Restricciones del Dominio
+            </h2>
+        </div>
+        <ul class="lista-limitaciones">
+            <li>
+                <span class="check-icono">✓</span>
+                <span><strong>Rango de validez:</strong> El modelo está restringido exclusivamente a distancias de <strong>3 a 165 km</strong> y cargas de <strong>50 a 2050 kg</strong>. Valores fuera de este rango representan extrapolaciones no confiables.</span>
+            </li>
+            <li>
+                <span class="check-icono">✓</span>
+                <span><strong>Componentes externos no modelados:</strong> No incluye fluctuaciones intempestivas del precio de combustible diésel, tarifas de peaje interprovincial ni tiempos muertos por cierres de carreteras.</span>
+            </li>
+            <li>
+                <span class="check-icono">✓</span>
+                <span><strong>Supuesto de linealidad:</strong> Asume comportamiento aditivo lineal directo sin interacciones cuadráticas complejas de pendiente o climatología extrema.</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="tarjeta">
+        <div class="seccion-header">
+            <h2 class="seccion-titulo">
+                <span class="seccion-icono">🛠️</span>
+                Stack Tecnológico del Proyecto
+            </h2>
+        </div>
+        <div class="tech-container">
+            <div class="tech-tag">🐍 Python 3.10+</div>
+            <div class="tech-tag">⚡ Flask Framework</div>
+            <div class="tech-tag">📊 scikit-learn</div>
+            <div class="tech-tag">🐼 pandas</div>
+            <div class="tech-tag">🎨 CSS Moderno (Zero JS)</div>
+            <div class="tech-tag">🚀 Vercel Serverless / PythonAnywhere</div>
+        </div>
+    </section>
+</main>
+
+<footer class="pie">
+    <p>SENATI — Escuela de Tecnologías de la Información | Taller de Machine Learning y Deep Learning</p>
+    <div class="pie-enlaces">
+        <a href="/">Calculadora</a>
+        <a href="/acerca">Documentación del Modelo</a>
+    </div>
+</footer>
+</body>
+</html>

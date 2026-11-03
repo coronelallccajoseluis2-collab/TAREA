@@ -1,0 +1,14 @@
+{
+    "intercepto": 21.51964453823132,
+    "coeficientes": {
+        "distancia_km": 2.7742350957517043,
+        "carga_kg": 0.10728632335623635,
+        "via_no_asfaltada": 26.441864153782838
+    },
+    "metricas": {
+        "mae": 17.793975041858538,
+        "r2": 0.977187305382063
+    },
+    "filas_entrenamiento": 104,
+    "filas_prueba": 26
+}
